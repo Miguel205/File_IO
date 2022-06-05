@@ -3,7 +3,6 @@ from string import capwords
 import matplotlib.pyplot as plt
 import numpy as np
 from termcolor import colored
-
 def convertTuple(tup):
     # initialize an empty string
     str = ''
@@ -170,7 +169,7 @@ def pie(file_name):
     plt.legend(title="Cites:")# tile of graph
     plt.show()#show the graph
 
-def most_common_names_graph():
+def dictories():
     f = open("dictionary.csv", "w+")  # opening the file with w+ mode truncates the file
     f.close()  # close file
     with open("first came.csv", "r") as fhand:  # set varible fand to open file first came.csv
@@ -192,6 +191,9 @@ def most_common_names_graph():
             list_kids = list(tuple)  # adds tuple to list
             f.write(list_kids[1] + "," + str(list_kids[0]) + "\n")  # writes list in .csv
     # ==========================================================
+
+
+def most_common_graph():
     # graph stuff
     heights = []  # how tall the values on the graph are
     bar_labels = []  # labels for values
@@ -277,27 +279,40 @@ def update(file_name):
         for i in list_file:
             f.write(i)
     print("updated")
-def reset(file_name):
-    all_file=[]
-    with open(file_name,"r") as f:# open file in read mode as f
-        for line in f:# for line in f
-            all_file.append(line)# add line to list
 
-
-n_choice=str(input("would you like to type the name of the file\ntype yes or no"))
+print(("would you like to type the name of the file\ntype"),(colored('Yes', 'green')),("or"),(colored('No', 'red')))
+n_choice=str(input())
 n_choice=capwords(n_choice)
 file_name=()
 if n_choice=="Yes":
     print("if the file you put in is not present the functions will print nothing")
     file_name=str(input("type file name exactly how it is called"))
+    try:
+        with open(file_name,"r") as f:
+            h=1
+    except:
+        print(colored("the file you entered is not prestent please download file and run the program again","red"))
+        quit()  # quit at this point
 if n_choice =="No":
     file_name=str("gcds.csv")
-else:
+    try:
+        with open(file_name,"r") as f:
+            h=1
+    except:
+        print(colored("gcds.csv is not prestent please rename file or download file and run the program again","red"))
+        quit()  # quit at this point
+if n_choice != "Yes" and n_choice != "No":
     print("not a valid answer defualt file (gcds.csv) will be used")
     file_name=str("gcds.csv")
+    try:
+        with open(file_name,"r") as f:
+            h=1
+    except:
+        print(colored("gcds.csv is not prestent please rename file or download file","red"))
+        quit()  # quit at this point
     time.sleep(.5)
 
-reset(file_name)
+
 
 print("what do you want from the file\n")
 print(("type"),(colored('1', 'blue')),(" for how many times a name shows up"))
@@ -306,7 +321,7 @@ print(("type"),(colored('2', 'blue')),(" for speacific infromation on a student"
 time.sleep(.25)
 print(("type"),colored('3', 'blue'),(" for the percent of poeple in a city"))
 time.sleep(.25)
-print(("type"),colored('4', 'blue'),("for a graph of the most common names"))
+print(("type"),colored('4', 'blue'),("to make a dictory of the most common frist name"))
 time.sleep(.25)
 print(("type"),colored('5', 'blue'),(" for delete a line in file"))
 time.sleep(.25)
@@ -316,6 +331,8 @@ while choice not in ["1","2","3","4","5","6"]:
     print("not a vaild answer\ntype either",colored('1,2,3,4,5 or 6','blue'))
     choice = input()
 #=======================================================================================================================
+
+
 if choice== "1":
     print(first_name(file_name))
 
@@ -333,10 +350,71 @@ if choice=="3":
         pie(file_name)
 
 if choice=="4":
-    most_common_names_graph()
-
+    dictories()
+    print("check file dictory csv")
 if choice=="5":
     delete(file_name)
 
 if choice=="6":
     update(file_name)
+
+user_in=input("would you like to run the program again")
+user_in=capwords(user_in)
+if user_in=="Yes":
+
+    n_choice = str(input("would you like to type the name of the file\ntype yes or no"))
+    n_choice = capwords(n_choice)
+    file_name = ()
+    if n_choice == "Yes":
+        print("if the file you put in is not present the functions will print nothing")
+        file_name = str(input("type file name exactly how it is called"))
+    if n_choice == "No":
+        file_name = str("gcds.csv")
+    else:
+        print("not a valid answer defualt file (gcds.csv) will be used")
+        file_name = str("gcds.csv")
+        time.sleep(.5)
+
+    print("what do you want from the file\n")
+    print(("type"), (colored('1', 'blue')), (" for how many times a name shows up"))
+    time.sleep(.25)
+    print(("type"), (colored('2', 'blue')), (" for speacific infromation on a student"))
+    time.sleep(.25)
+    print(("type"), colored('3', 'blue'), (" for the percent of poeple in a city"))
+    time.sleep(.25)
+    print(("type"), colored('4', 'blue'), ("for a graph of the most common names"))
+    time.sleep(.25)
+    print(("type"), colored('5', 'blue'), (" for delete a line in file"))
+    time.sleep(.25)
+    print(("type"), colored('6', 'blue'), ("to update a file"))
+    choice = input()
+    while choice not in ["1", "2", "3", "4", "5", "6"]:
+        print("not a vaild answer\ntype either", colored('1,2,3,4,5 or 6', 'blue'))
+        choice = input()
+    # =======================================================================================================================
+
+    if choice == "1":
+        print(first_name(file_name))
+
+    if choice == "2":
+        print(info_on_student(file_name))
+
+    if choice == "3":
+
+        city = ""
+        data, city = percent_students_city(file_name)
+        print(data + " of the students live in " + city)
+        pie_question = input("would you like a pie cart of the students\n")
+        pie_question = capwords(pie_question)
+        if pie_question == "Yes":
+            pie(file_name)
+
+    if choice == "4":
+        dictories()
+        print("check file dictory csv")
+
+    if choice == "5":
+        delete(file_name)
+
+    if choice == "6":
+        update(file_name)
