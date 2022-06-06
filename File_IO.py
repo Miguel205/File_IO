@@ -293,7 +293,7 @@ def update(file_name):
     last = input("Last name(s)\n")
     last=capwords(last)
     grade = input("Grade\n values accepted N PK K 1-12\n")
-    while grade not in ["N","PK","K","1","2","3","4","5","6","7","8","9","10","11","12"]:
+    while grade not in ["N","n","PK","pk","K","k","1","2","3","4","5","6","7","8","9","10","11","12"]:
         print("not acceptable answer please type either\nN PK K 1-12")
         grade= input()
     gen = input("Gender\n values accepted M or F")
